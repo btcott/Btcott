@@ -63,7 +63,9 @@
 - **Свежий шаблон Expo не проходит проверки.** На шаблоне SDK 58 `tsc` дал 3 ошибки (CSS-файлы и типы в `*.web.tsx`), а `lint` дал 1 ошибку (`react-hooks/set-state-in-effect`). Сборка при этом проходит, а `expo-doctor` показывает 20 из 20.
 - **Первый запуск `npx expo lint` падает** после автоустановки ESLint с сообщением о версии. Второй запуск работает.
 - **`expo-env.d.ts`.** Файл создаёт `npx expo customize tsconfig.json`, он уже есть в `.gitignore` шаблона. Команда убирает 2 ошибки `tsc` про CSS. Остаются 1 ошибка `tsc` в `app-tabs.web.tsx` и 1 ошибка `lint` в `use-color-scheme.web.ts`: это проблемы шаблона.
-- **Xcode 27.** Вместо приложения Simulator используется `open -a DeviceHub`. Как с этим работает `expo start --ios`, не проверено.
+- **Xcode 27.** Вместо приложения Simulator используется `open -a DeviceHub`, но `npx expo start --ios` работает с Xcode 27.2 без дополнительных действий.
+- **Установка Expo Go на Android.** С adb 37.0.1 и эмулятором на API 37 `npx expo start --android` падает на установке Expo Go: потоковая установка `adb` не может разобрать APK, хотя файл целый. Причина не выяснена. Обход: `adb install --no-streaming -r -t ~/.expo/android-apk-cache/Expo-Go-<версия>.apk`, затем снова `npx expo start --android`.
+- **Android Platform.** На этом Mac установлена Platform 37, а не 36 из документации Expo. Для Expo Go этого хватает, отдельная сборка не проверялась.
 - **`CI=1`** отключает интерактивные запросы Expo CLI и завершает команду с ошибкой на обязательных запросах.
 - **`workflow_dispatch`** запускается только для workflow, который уже есть в ветке по умолчанию. Поэтому Фича 6 идёт после слияния в `main`.
 - **`permissions.deny`** не закрывает чтение через `python3`, см. раздел «Безопасность» в дизайне.
@@ -144,7 +146,7 @@
 
 ---
 
-### Фича 4: Завершить ручную настройку
+### Фича 4: Завершить ручную настройку ✅
 
 **Цель:** на Mac есть рабочий iOS-симулятор и Android-эмулятор, пользователь вошёл в аккаунты.
 
@@ -156,20 +158,20 @@
 - Тесты: `~/dotfiles/install.sh --check`
 
 **Шаги:**
-- [ ] Xcode → Settings → Components → Platform Support → iOS → Get
-- [ ] Открыть Android Studio и пройти мастер первого запуска
-- [ ] В SDK Manager установить Android SDK Platform 36, Sources for Android 36, Build-Tools и Android Emulator
-- [ ] В Device Manager создать виртуальное устройство
-- [ ] Выполнить `gh auth login`
-- [ ] Выполнить `eas login`; если аккаунта нет, создать его на expo.dev
+- [x] Xcode → Settings → Components → Platform Support → iOS → Get
+- [x] Открыть Android Studio и пройти мастер первого запуска
+- [x] В SDK Manager установить Android SDK Platform 36, Sources for Android 36, Build-Tools и Android Emulator
+- [x] В Device Manager создать виртуальное устройство
+- [x] Выполнить `gh auth login`
+- [x] Выполнить `eas login`; если аккаунта нет, создать его на expo.dev
 
 **Проверка:**
-- [ ] `xcrun simctl list devices available | grep iPhone` — хотя бы одно устройство
-- [ ] `emulator -list-avds` — хотя бы одно имя
-- [ ] `adb --version` — выводит версию
-- [ ] `gh auth status` — «Logged in»
-- [ ] `eas whoami` — имя аккаунта
-- [ ] `~/dotfiles/install.sh --check` — ручных шагов не осталось
+- [x] `xcrun simctl list devices available | grep iPhone` — хотя бы одно устройство
+- [x] `emulator -list-avds` — хотя бы одно имя
+- [x] `adb --version` — выводит версию
+- [x] `gh auth status` — «Logged in»
+- [x] `eas whoami` — имя аккаунта
+- [x] `~/dotfiles/install.sh --check` — ручных шагов не осталось
 
 ---
 
