@@ -3,6 +3,7 @@
 #
 #   ./install.sh               полная установка
 #   ./install.sh --links-only  только симлинки, без установки программ
+#   ./install.sh --check       только показать, какие ручные шаги остались
 
 set -Eeuo pipefail
 
@@ -102,17 +103,44 @@ install_claude_code() {
   curl -fsSL https://claude.ai/install.sh | bash
 }
 
-print_summary() {
-  step "Итог"
-  echo "Автоматическая часть завершена. Осталось сделать вручную:"
-  if [ ! -d /Applications/Xcode.app ]; then
-    echo "  - установить Xcode из App Store, открыть один раз и принять лицензию"
+manual_steps() {
+  local android_sdk="$HOME/Library/Android/sdk" runtimes avds
+
+  if ! xcodebuild -version >/dev/null 2>&1; then
+    echo "  - установить Xcode из App Store"
+  elif ! xcodebuild -license check >/dev/null 2>&1; then
+    echo "  - принять лицензию Xcode: sudo xcodebuild -license accept"
+  else
+    runtimes="$(xcrun simctl list runtimes 2>/dev/null || true)"
+    if ! grep -q '^iOS' <<<"$runtimes"; then
+      echo "  - поставить iOS-симулятор: Xcode → Settings → Components → Platform Support → iOS → Get"
+    fi
   fi
-  if [ ! -d "$HOME/Library/Android/sdk" ]; then
+
+  if [ ! -d "$android_sdk" ]; then
     echo "  - открыть Android Studio и установить Android SDK"
   fi
-  echo "  - войти в аккаунты, если ещё не вошёл: claude, gh auth login, eas login"
-  echo "  - открыть новый терминал, чтобы применился .zshrc"
+  avds="$("$android_sdk/emulator/emulator" -list-avds 2>/dev/null || true)"
+  if [ -z "$avds" ]; then
+    echo "  - создать виртуальное устройство: Android Studio → Device Manager"
+  fi
+
+  claude auth status >/dev/null 2>&1 || echo "  - войти в Claude Code: claude"
+  gh auth status >/dev/null 2>&1 || echo "  - войти в GitHub: gh auth login"
+  eas whoami >/dev/null 2>&1 || echo "  - войти в Expo: eas login"
+}
+
+print_summary() {
+  local steps
+
+  step "Итог"
+  steps="$(manual_steps)"
+  if [ -z "$steps" ]; then
+    echo "Ручных шагов не осталось."
+  else
+    echo "Осталось сделать вручную:"
+    echo "$steps"
+  fi
 }
 
 main() {
@@ -131,9 +159,13 @@ main() {
       create_links
       install_claude_code
       print_summary
+      echo "Открой новый терминал, чтобы применился .zshrc."
+      ;;
+    --check)
+      print_summary
       ;;
     *)
-      die "Неизвестный параметр: $1. Доступен только --links-only"
+      die "Неизвестный параметр: $1. Доступны --links-only и --check"
       ;;
   esac
 }

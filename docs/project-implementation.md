@@ -70,7 +70,7 @@
 
 ---
 
-### Фича 1: Зафиксировать текущую реализацию
+### Фича 1: Зафиксировать текущую реализацию ✅
 
 **Цель:** готовая реализация закоммичена в `setup-environment`, дизайн совпадает с кодом.
 
@@ -80,24 +80,24 @@
 - Тесты: `~/dotfiles/tests/test-install.sh`
 
 **Шаги:**
-- [ ] В `install.yml` заменить `actions/checkout@v4` на `actions/checkout@v7`
-- [ ] В дизайне обновить дерево файлов: убрать Watchman, добавить `tests/`, `.github/`, `.gitignore`
-- [ ] В дизайне заменить `set -euo pipefail` на `set -Eeuo pipefail`
-- [ ] В дизайне описать `--links-only` и `~/.zshrc.local`
-- [ ] В дизайне добавить ручные шаги: лицензия Xcode, iOS runtime, Android SDK и виртуальное устройство
-- [ ] Спросить пользователя, можно ли коммитить, и после согласия сделать отдельные коммиты: настройка среды, тесты и CI, документация
+- [x] В `install.yml` заменить `actions/checkout@v4` на `actions/checkout@v7`
+- [x] В дизайне обновить дерево файлов: убрать Watchman, добавить `tests/`, `.github/`, `.gitignore`
+- [x] В дизайне заменить `set -euo pipefail` на `set -Eeuo pipefail`
+- [x] В дизайне описать `--links-only` и `~/.zshrc.local`
+- [x] В дизайне добавить ручные шаги: лицензия Xcode, iOS runtime, Android SDK и виртуальное устройство
+- [x] Спросить пользователя, можно ли коммитить, и после согласия сделать отдельные коммиты: настройка среды, тесты и CI, документация
 
 **Проверка:**
-- [ ] `~/dotfiles/tests/test-install.sh` — последняя строка «Все проверки пройдены»
-- [ ] `cd ~/dotfiles && shellcheck install.sh tests/test-install.sh scripts/statusline.sh` — пустой вывод, код 0
-- [ ] `jq -e . ~/dotfiles/claude/settings.json >/dev/null` — код 0
-- [ ] `gitleaks dir ~/dotfiles --no-banner` — «no leaks found»
-- [ ] `gitleaks git ~/dotfiles --no-banner` — «no leaks found»
-- [ ] `git -C ~/dotfiles status --short` — пустой вывод
+- [x] `~/dotfiles/tests/test-install.sh` — последняя строка «Все проверки пройдены»
+- [x] `cd ~/dotfiles && shellcheck install.sh tests/test-install.sh scripts/statusline.sh` — пустой вывод, код 0
+- [x] `jq -e . ~/dotfiles/claude/settings.json >/dev/null` — код 0
+- [x] `gitleaks dir ~/dotfiles --no-banner` — «no leaks found»
+- [x] `gitleaks git ~/dotfiles --no-banner` — «no leaks found»
+- [x] `git -C ~/dotfiles status --short` — пустой вывод
 
 ---
 
-### Фича 2: Подсказки о ручных шагах
+### Фича 2: Подсказки о ручных шагах ✅
 
 **Цель:** `install.sh` показывает только те ручные шаги, которые действительно остались, включая лицензию Xcode, iOS runtime и виртуальное устройство Android.
 
@@ -106,18 +106,18 @@
 - Тесты: `~/dotfiles/tests/test-install.sh`
 
 **Шаги:**
-- [ ] Добавить в `print_summary` проверку лицензии Xcode: `xcodebuild -checkFirstLaunchStatus` или `xcrun simctl list runtimes`
-- [ ] Добавить проверку iOS runtime: в выводе `xcrun simctl list runtimes` есть строка `iOS`
-- [ ] Добавить проверку виртуального устройства: `emulator -list-avds` выводит хотя бы одно имя
-- [ ] Заменить общую строку про аккаунты отдельными проверками `gh auth status` и `eas whoami`
-- [ ] Добавить режим `./install.sh --check`, который запускает только `print_summary` и нужен для тестов и повторной проверки
-- [ ] В `tests/test-install.sh` подменить `xcrun`, `emulator`, `gh` и `eas` заглушками через `PATH` и проверить оба случая: шаг выполнен и шаг не выполнен
-- [ ] Описать `--check` в дизайне
+- [x] Добавить в `print_summary` проверку лицензии Xcode: `xcodebuild -checkFirstLaunchStatus` или `xcrun simctl list runtimes`
+- [x] Добавить проверку iOS runtime: в выводе `xcrun simctl list runtimes` есть строка `iOS`
+- [x] Добавить проверку виртуального устройства: `emulator -list-avds` выводит хотя бы одно имя
+- [x] Заменить общую строку про аккаунты отдельными проверками `gh auth status` и `eas whoami`
+- [x] Добавить режим `./install.sh --check`, который запускает только `print_summary` и нужен для тестов и повторной проверки
+- [x] В `tests/test-install.sh` подменить `xcrun`, `emulator`, `gh` и `eas` заглушками через `PATH` и проверить оба случая: шаг выполнен и шаг не выполнен
+- [x] Описать `--check` в дизайне
 
 **Проверка:**
-- [ ] `~/dotfiles/tests/test-install.sh` — последняя строка «Все проверки пройдены»
-- [ ] `~/dotfiles/install.sh --check` — перечислены iOS runtime, Android SDK, виртуальное устройство, `gh`, `eas`; лицензии Xcode в списке нет
-- [ ] `cd ~/dotfiles && shellcheck install.sh tests/test-install.sh` — пустой вывод, код 0
+- [x] `~/dotfiles/tests/test-install.sh` — последняя строка «Все проверки пройдены»
+- [x] `~/dotfiles/install.sh --check` — перечислены iOS runtime, Android SDK, виртуальное устройство, `gh`, `eas`; лицензии Xcode в списке нет
+- [x] `cd ~/dotfiles && shellcheck install.sh tests/test-install.sh` — пустой вывод, код 0
 
 ---
 
