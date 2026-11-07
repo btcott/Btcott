@@ -175,7 +175,7 @@
 
 ---
 
-### Фича 5: Приёмка среды
+### Фича 5: Приёмка среды ✅
 
 **Цель:** тестовое приложение запускается на обеих платформах, открытые вопросы дизайна закрыты, среда признана готовой.
 
@@ -184,24 +184,24 @@
 - Тесты: приёмка на `/tmp/expo-accept/test-app`
 
 **Шаги:**
-- [ ] Если `/tmp/expo-accept/test-app` нет, создать его командой из Фичи 3
-- [ ] Запустить на iOS: `cd /tmp/expo-accept/test-app && npx expo start --ios`
-- [ ] Сделать снимок экрана: `xcrun simctl io booted screenshot /tmp/expo-accept/ios.png`
-- [ ] Запустить эмулятор Android: `emulator -avd <имя> &`, затем `npx expo start --android`
-- [ ] Сделать снимок экрана: `adb exec-out screencap -p > /tmp/expo-accept/android.png`
-- [ ] Выполнить `/expo-check` в проекте
-- [ ] Попросить пользователя посмотреть на statusline в Claude Code: после первого ответа модели должна быть шкала с процентами, а не `контекст: —`
-- [ ] Если шкалы нет, поправить поле в `~/dotfiles/scripts/statusline.sh`
-- [ ] Удалить тестовое приложение: `rm -rf /tmp/expo-accept`
-- [ ] Записать результаты в раздел «Проверено при реализации», убрать закрытые пункты из «Открытых вопросов»
+- [x] Если `/tmp/expo-accept/test-app` нет, создать его командой из Фичи 3
+- [x] Запустить на iOS: `cd /tmp/expo-accept/test-app && npx expo start --ios`
+- [x] Сделать снимок экрана: `xcrun simctl io booted screenshot /tmp/expo-accept/ios.png`
+- [x] Запустить эмулятор Android: `emulator -avd <имя> &`, затем `npx expo start --android`
+- [x] Сделать снимок экрана: `adb exec-out screencap -p > /tmp/expo-accept/android.png`
+- [x] Выполнить `/expo-check` в проекте
+- [x] Попросить пользователя посмотреть на statusline в Claude Code: после первого ответа модели должна быть шкала с процентами, а не `контекст: —`
+- [x] Если шкалы нет, поправить поле в `~/dotfiles/scripts/statusline.sh`
+- [x] Удалить тестовое приложение: `rm -rf /tmp/expo-accept`
+- [x] Записать результаты в раздел «Проверено при реализации», убрать закрытые пункты из «Открытых вопросов»
 
 **Проверка:**
-- [ ] `/tmp/expo-accept/ios.png` показывает экран приложения, а не ошибку
-- [ ] `/tmp/expo-accept/android.png` показывает экран приложения, а не ошибку
-- [ ] `adb devices` — строка вида `emulator-5554	device`
-- [ ] `/expo-check` — `expo-doctor` пройден, остальные проблемы только в нетронутых файлах шаблона
-- [ ] Пользователь подтвердил шкалу контекста в statusline
-- [ ] `ls /tmp/expo-accept` — «No such file or directory»
+- [x] `/tmp/expo-accept/ios.png` показывает экран приложения, а не ошибку
+- [x] `/tmp/expo-accept/android.png` показывает экран приложения, а не ошибку
+- [x] `adb devices` — строка вида `emulator-5554	device`
+- [x] `/expo-check` — `expo-doctor` пройден, остальные проблемы только в нетронутых файлах шаблона
+- [x] Пользователь подтвердил шкалу контекста в statusline
+- [x] `ls /tmp/expo-accept` — «No such file or directory»
 
 ---
 
