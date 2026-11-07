@@ -205,7 +205,7 @@
 
 ---
 
-### Фича 6: Публикация и чистая установка
+### Фича 6: Публикация и чистая установка ✅
 
 **Цель:** всё лежит в `main`, чистая установка проходит на GitHub Actions.
 
@@ -214,18 +214,18 @@
 - Тесты: `~/dotfiles/.github/workflows/install.yml`
 
 **Шаги:**
-- [ ] Напомнить, что репозиторий публичный: будут видны правила, настройки, локаль и список плагинов
-- [ ] После прямой просьбы пользователя влить `setup-environment` в `main` через `git merge --ff-only` и запушить
-- [ ] Запустить workflow: `gh workflow run install.yml --repo btcott/Btcott`
-- [ ] Дождаться результата: `gh run watch --repo btcott/Btcott --exit-status`
-- [ ] Если workflow упал, исправить причину и повторить, изменения вносить через новую ветку
-- [ ] Удалить ветку `setup-environment` локально и на GitHub, если пользователь согласен
-- [ ] Записать результат в дизайн
+- [x] Напомнить, что репозиторий публичный: будут видны правила, настройки, локаль и список плагинов
+- [x] После прямой просьбы пользователя влить `setup-environment` в `main` через `git merge --ff-only` и запушить
+- [x] Запустить workflow: `gh workflow run install.yml --repo btcott/Btcott`
+- [x] Дождаться результата: `gh run watch --repo btcott/Btcott --exit-status`
+- [x] Если workflow упал, исправить причину и повторить, изменения вносить через новую ветку
+- [x] Удалить ветку `setup-environment` локально и на GitHub, если пользователь согласен
+- [x] Записать результат в дизайн
 
 **Проверка:**
-- [ ] `gh run list --repo btcott/Btcott --workflow install.yml --limit 1` — статус `completed`, результат `success`
-- [ ] `git -C ~/dotfiles status -sb` — `## main...origin/main`, других строк нет
-- [ ] `ls -L ~/.claude/settings.json ~/.claude/statusline.sh ~/.claude/commands/expo-check.md` — все пути существуют
+- [x] `gh run list --repo btcott/Btcott --workflow install.yml --limit 1` — статус `completed`, результат `success`
+- [x] `git -C ~/dotfiles status -sb` — `## main...origin/main`, других строк нет
+- [x] `ls -L ~/.claude/settings.json ~/.claude/statusline.sh ~/.claude/commands/expo-check.md` — все пути существуют
 
 ---
 
