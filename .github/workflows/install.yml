@@ -1,0 +1,32 @@
+name: Clean install
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Put repository in the expected location
+        run: ln -s "$GITHUB_WORKSPACE" "$HOME/dotfiles"
+
+      - name: First run
+        run: "$HOME/dotfiles/install.sh"
+
+      - name: Second run changes nothing
+        run: |
+          "$HOME/dotfiles/install.sh" | tee second-run.log
+          ! grep -E '^(бэкап|симлинк):' second-run.log
+
+      - name: Check links
+        run: |
+          test -L "$HOME/.zshrc"
+          test -L "$HOME/.claude/CLAUDE.md"
+          test -L "$HOME/.claude/settings.json"
+          test -L "$HOME/.claude/statusline.sh"
+          test -L "$HOME/.claude/commands/expo-check.md"
